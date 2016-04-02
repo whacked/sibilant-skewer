@@ -1,0 +1,13 @@
+* sibilant skewer
+
+  for emacs-browser interaction for [[https://github.com/jbr/sibilant][sibilant]] files via [[https://github.com/skeeto/skewer-mode][skewer]]
+
+  stub code copy pasted from [[https://github.com/whacked/wispjs-mode/blob/master/wispjs-skewer.el][wispjs-skewer]]
+
+* usage
+
+  1. set =httpd-root= for emacs
+  2. =M-x httpd-start=
+  3. open your sibilant file and =M-x skewer-mode=
+  4. open browser to =http://localhost:8080/example.html=
+
