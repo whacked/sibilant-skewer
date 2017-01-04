@@ -1,8 +1,12 @@
 ;; (setq httpd-root default-directory)
+;; (setq httpd-port 9000)
 
-(setq sibilant-preamble "
+;; override this per-buffer to match on the target document.baseURI in
+;; case you have many simultaneous skewer connections
+(setq-local project-regexp nil)
 
-")
+(setq sibilant-preamble "")
+(setq sibilant-postamble "")
 
 (setq sibilant-program "~/node_modules/bin/sibilant")
 
@@ -35,11 +39,23 @@
       (message "Compiled to %s" output-name))))
 
 (defun sibilant-skewer-send-region (beg end)
-  (let ((selected (buffer-substring beg end)))
+  (let ((selected (buffer-substring beg end))
+        (p-rx (if (local-variable-p 'project-regexp)
+                  project-regexp
+                nil)))
     (with-temp-buffer
       (let ((tbuf (current-buffer)))
+        ;; open the project specific matcher
+        (when p-rx
+          (insert "(when (.test "
+                  "(regex \"" p-rx "\") "
+                  "document.baseURI)\n"))
         (insert sibilant-preamble)
         (insert selected)
+        (insert sibilant-postamble)
+        ;; close the project specific matcher
+        (when p-rx
+          (insert "\n)"))
         (call-process-region
          (point-min) (point-max)
          sibilant-program
