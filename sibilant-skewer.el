@@ -12,6 +12,10 @@
 
 (setq-local inferior-lisp-program sibilant-program)
 
+(defun sibilant-mode/sibilize (sibilant)
+  (shell-command-to-string
+   (concat sibilant-program " -i " (prin1-to-string sibilant))))
+
 (defun sibilant-mode/compile ()
   "Invoke the Sibilant compiler for the current buffer."
   (interactive)
@@ -81,6 +85,7 @@
                       (point))))
       (sibilant-skewer-send-region beg end))))
 
+(define-key sibilant-mode-map (kbd "C-c C-c") 'sibilant-mode/compile)
 (define-key sibilant-mode-map (kbd "C-x C-e") 'sibilant-skewer-eval-preceding-sexp)
 (define-key sibilant-mode-map (kbd "C-M-x") 'sibilant-skewer-eval-defun)
 

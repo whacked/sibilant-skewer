@@ -1,3 +1,5 @@
+# (progn (load-file "sibilant-skewer.el") (org-babel-load-file "README.org"))
+
 * sibilant skewer
 
   for emacs-browser interaction for [[https://github.com/jbr/sibilant][sibilant]] files via [[https://github.com/skeeto/skewer-mode][skewer]]
