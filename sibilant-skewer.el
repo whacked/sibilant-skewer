@@ -5,7 +5,11 @@
 ;; case you have many simultaneous skewer connections
 (setq-local project-regexp nil)
 
-(setq sibilant-preamble "")
+(setq sibilant-preamble "(macro eval-matching-uri (re-match ...body)
+       `(when (|> @re-match
+                  (regex)
+                  (.test document.baseURI))
+              ...@body))")
 (setq sibilant-postamble "")
 
 (setq sibilant-program "~/node_modules/bin/sibilant")
